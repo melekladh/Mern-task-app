@@ -11,6 +11,7 @@ app.use(express.json())
 app.use(cors())
 port=process.env.PORT || 8081
 app.use('/api',require('./routes/userRoutes'))
+app.use('/api/product',require('./routes/productRoutes'))
 app.listen(port,(err)=>{
     err?console.log(err):console.log("port is running on  port",port)
 })

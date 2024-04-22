@@ -12,7 +12,7 @@ try {
    const existUser= await User.findOne({email:email})
    if (existUser){
     
-    res.status(200).json({msg:"email already exists try to login"})
+    res.status(400).json({msg:"email already exists try to login"})
    }
    else{
     const hashPw=await bcrypt.hash(password,10)
