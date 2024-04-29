@@ -1,66 +1,44 @@
-import React, { useRef } from 'react'
-import { UserRegister } from '../redux/slices/userSlice'
-import { useDispatch, useSelector } from 'react-redux'
-// import "../css/register.css"
+import React, { useRef } from 'react'; // Importing React and useRef hook from react
+import { UserRegister } from '../redux/slices/userSlice'; // Importing UserRegister action from userSlice
+import { useDispatch, useSelector } from 'react-redux'; // Importing necessary hooks from react-redux for interacting with Redux store
+import "../css/register.css"; // Importing CSS file for styling
+
 const Register = () => {
-  const email=useRef()
-  const password=useRef()
-const dispatch=useDispatch()
-const {error}=useSelector(state=>state.user)
+  // Creating ref for email and password inputs
+  const email = useRef();
+  const password = useRef();
+
+  // Accessing dispatch function for dispatching actions to Redux store
+  const dispatch = useDispatch();
+  
+  // Extracting error state from Redux store
+  const { error } = useSelector(state => state.user);
+
   return (
-
-    <div>
-      
-
-
-
-      {/* <div className="container">
-	<div className="screen">
-		<div className="screen__content">
-			<form className="login">
-				<div className="login__field">
-					<i className="login__icon fas fa-user"></i>
-					<input type="text" class="login__input" placeholder="User name / Email"></input>
-				</div>
-				<div className="login__field">
-					<i className="login__icon fas fa-lock"></i>
-					<input type="password" class="login__input" placeholder="Password"></input>
-				</div>
-				<button className="button login__submit">
-					<span className="button__text">Log In Now</span>
-					<i className="button__icon fas fa-chevron-right"></i>
-				</button>				
-			</form>
-			<div className="social-login">
-				<h3>log in via</h3>
-				<div className="social-icons">
-					<a href="#" className="social-login__icon fab fa-instagram"></a>
-					<a href="#" className="social-login__icon fab fa-facebook"></a>
-					<a href="#" className="social-login__icon fab fa-twitter"></a>
-				</div>
-			</div>
-		</div>
-		<div className="screen__background">
-			<span className="screen__background__shape screen__background__shape4"></span>
-			<span className="screen__background__shape screen__background__shape3"></span>		
-			<span className="screen__background__shape screen__background__shape2"></span>
-			<span className="screen__background__shape screen__background__shape1"></span>
-		</div>		
-	</div>
-</div> */}
-     <div>
-     <input type='email' placeholder='type your email' ref={email}></input>
-   <input type='password' placeholder='type your password'ref={password}></input>
-     <button onClick={()=>dispatch(UserRegister({
-       email:email.current.value,
-       password:password.current.value
-        }))}>register</button>
-     {error&& <h1>{error}</h1>}
-   
-
-   </div>
+    // Register form
+    <div className='container' style={{ width: '100%' }}>
+      <div className='inputs'>
+        {/* Email input field */}
+        <div>EMAIL</div>
+        <input type='email' ref={email}></input>
+        
+        {/* Password input field */}
+        <div>PASSWORD</div>
+        <input type='password' ref={password}></input>
+        
+        {/* Register button */}
+        <button onClick={() => dispatch(UserRegister({ // Dispatching UserRegister action with email and password
+          email: email.current.value, // Getting email value from ref
+          password: password.current.value // Getting password value from ref
+        }))}>
+          REGISTER
+        </button>
+        
+        {/* Displaying error message if there's any */}
+        {error && <h5>{error}</h5>}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

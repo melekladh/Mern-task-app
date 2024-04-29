@@ -1,48 +1,45 @@
-const Product=require('../models/productModel')
+const Product = require('../models/productModel'); // Importing the Product model
 
-// const  getProducts = async (req,res)=>{
-//     try{
-//         const products = await Product.find()
-//         res.status(200).json(products)
-//     }catch(err){
-//         console.log(err);
-//         res.status(500).send("Error Interno del Servidor")
-//     }
-// }
-
-//Obtener un producto por su ID
-// const getProductById = async (req,res)=>{
-//    const {id}= req.params;
-//    try{
-//        const product =await Product.findById(id)
-//        if(!product) return res.status(404).json({msg:"No se ha encontrado el producto"})
-//        res.status(200).json(product)
-//    }catch(e){
-//        console.log(e);
-//        res.status(500).json({msg: "Error interno del servidor"});
-//    }
-// }
-
-//Create a new product
-const createProduct = async (req,res)=>{
-try {
-    const{title,desc,userId}=req.body;
-    const newProduct=await Product.create({title, desc, owner:userId})
-    res.status(200).json(newProduct)
-} catch (error) {
-    res.status(500).json({msg:"something went wrong"})
-
-}
-}
-
-const deleteProduct = async (req,res)=>{
+// Controller function to get all products
+const getProducts = async (req, res) => {
     try {
-        const productdeleted=await Product.findByIdandDelete(req.params.id)
-        res.status(200).json(productdeleted)
+        const products = await Product.find(); // Find all products
+        res.status(200).json({ products }); // Respond with the array of products
+    } catch (err) {
+        console.log(err); // Log any errors
+        res.status(500).send("Error Interno del Servidor"); // Respond with 500 status code and error message
+    }
+};
+
+// Controller function to create a new product
+const createProduct = async (req, res) => {
+    try {
+        const newProduct = await Product.create(req.body); // Create a new product with request body data
+        res.status(200).json(newProduct); // Respond with the newly created product
     } catch (error) {
-        res.status(500).json({msg:"something went wrong"})
-    
+        res.status(500).json({ msg: "something went wrong" }); // Respond with 500 status code and error message
     }
+};
+
+// Controller function to update a product
+const updateProduct = async (req, res) => {
+    try {
+        const productUpdated = await Product.findOneAndUpdate(req.body); // Find and update the product
+        res.status(200).json(productUpdated); // Respond with the updated product
+    } catch (error) {
+        res.status(500).json({ msg: "something went wrong" }); // Respond with 500 status code and error message
     }
-// export  default {createProduct};
-module.exports={createProduct,deleteProduct};
+};
+
+// Controller function to delete a product
+const deleteProduct = async (req, res) => {
+    try {
+        const productDeleted = await Product.findOneAndDelete(req.body.title); // Find and delete the product by title
+        res.status(200).json({ msg: "product deleted", productDeleted }); // Respond with success message and deleted product
+    } catch (error) {
+        res.status(500).json({ msg: "something went wrong" }); // Respond with 500 status code and error message
+    }
+};
+
+// Exporting the controller functions
+module.exports = { createProduct, deleteProduct, getProducts, updateProduct };
